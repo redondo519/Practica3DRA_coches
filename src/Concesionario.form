@@ -71,14 +71,6 @@
         </constraints>
         <properties/>
       </component>
-      <component id="43cf0" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
-        <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="b423d" class="javax.swing.JLabel" binding="Ruedas">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -122,6 +114,14 @@
         <properties>
           <text value="BAJA PEDIDO SELECCIONADO"/>
         </properties>
+      </component>
+      <component id="d3a7f" class="javax.swing.JList" binding="jList">
+        <constraints>
+          <grid row="4" column="2" row-span="4" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

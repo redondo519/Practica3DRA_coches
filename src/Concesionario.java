@@ -10,11 +10,11 @@ public class Concesionario {
     private JComboBox comboMotor;
     private JLabel Color;
     private JComboBox comboColor;
-    private JTextArea textArea1;
     private JLabel Ruedas;
     private JComboBox comboRuedas;
     private JLabel PilotoAutomatico;
     private JComboBox comboPiloto;
     private JButton botonPedido;
     private JButton botonSeleccionado;
+    private JList jList;
 }
