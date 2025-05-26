@@ -1,8 +1,11 @@
 package controlador;
 
 import modelo.ConcesionarioDAO;
+import modelo.Pedido;
 import vista.Vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,17 +14,18 @@ import java.util.ArrayList;
  */
 
 public class Controlador {
+    //Atributos
     private Vista vista;
 
+    //Constructor (se le pasa la vista)
     public Controlador(Vista vista) {
         this.vista = vista;
-        inicializarComboBoxes();
-        configurarEventos();
-
+        inicializarComboBoxes(); //metodo que carga los datos en todos los comboboxes.
+        configurarEventos();    //metodo que prepara todos los eventos de la GUI: botones y list
     }
 
 
-
+    //Cargar los datos en todos los comboboxes.
     private void inicializarComboBoxes() {
         try{
             cargarModelo();
@@ -31,15 +35,35 @@ public class Controlador {
             cargarPilotoAutomatico();
 
         } catch (SQLException e){
-            vista.muestraAlerta("Error al cargar los datos iniciales");
+            vista.muestraAlerta("Error al cargar los datos iniciales"); //Muestra la alerta mediante JOptionPane.showMessageDialog
         }
     }
 
 
+    //Preparar botones y jlist.
     private void configurarEventos() {
+
+        //HACER PEDIDO
+        vista.getBotonPedido().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String modelo = vista.getComboModelo().getSelectedItem().toString();
+                String motor = vista.getComboMotor().getSelectedItem().toString();
+                String color = vista.getComboColor().getSelectedItem().toString();
+                int ruedas = (int) vista.getComboRuedas().getSelectedItem();
+                boolean pilotoAutomatico = (boolean) vista.getComboPiloto().getSelectedItem();
+
+                //Costruimos objeto de Pedido con los datos seleccionados en los comboboxes
+                Pedido pedido = new Pedido(modelo, motor, color, ruedas, pilotoAutomatico);
+            }
+        });
 
     }
 
+
+
+    //Metodos que llamamos al inicializarComboboxes()
     private void cargarModelo() throws SQLException{
         ArrayList<String> modelos = ConcesionarioDAO.getModelos();
         vista.setComboModelo(modelos);
@@ -59,7 +83,6 @@ public class Controlador {
         ArrayList<Integer> ruedas = ConcesionarioDAO.getRuedas();
         vista.setComboRuedas(ruedas);
     }
-
 
     private void cargarPilotoAutomatico() throws SQLException {
         ArrayList<Boolean> pilotos = ConcesionarioDAO.getPiloto();

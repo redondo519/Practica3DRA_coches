@@ -56,7 +56,7 @@ public class Vista extends JFrame {
     }
 
 
-
+    //Metodos llamados en Controlador para llenar comboboxes
     public void setComboModelo(ArrayList<String> modelo) {
         comboModelo.removeAllItems(); // Limpia el combobox antes de llenarlo
         for (String s : modelo) {
@@ -71,13 +71,13 @@ public class Vista extends JFrame {
         }
     }
 
-
     public void setComboColor(ArrayList<String> color) {
         comboColor.removeAllItems();
         for (String s : color) {
             comboColor.addItem(s);
         }
     }
+
     public void setComboRuedas(ArrayList<Integer> ruedas) {
         comboRuedas.removeAllItems();
         for (Integer s : ruedas) {
@@ -93,8 +93,15 @@ public class Vista extends JFrame {
     }
 
 
+    //BOTONES
+    //metodo boton Hacer pedido
+    public JButton getBotonPedido(){
+        return botonPedido;
+    }
 
 
+
+    //Metodo para mostrar alertas de excepciones
     public void muestraAlerta(String alerta) {
         JOptionPane.showMessageDialog(
                 Panel1,
