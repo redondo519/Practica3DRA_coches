@@ -3,6 +3,10 @@ package vista;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/*
+   Redondo Alonso David
+ */
+
 public class Vista extends JFrame {
     private JLabel Titulo;
     private JPanel Panel1;
@@ -81,14 +85,12 @@ public class Vista extends JFrame {
         }
     }
 
-    public void setComboPiloto(boolean piloto) {
+    public void setComboPiloto(ArrayList<Boolean> piloto) {
         comboPiloto.removeAllItems();
-        comboPiloto.addItem("False");
-        comboPiloto.addItem("True");
+        for (Boolean s : piloto) {
+            comboPiloto.addItem(s);
+        }
     }
-
-
-
 
 
 

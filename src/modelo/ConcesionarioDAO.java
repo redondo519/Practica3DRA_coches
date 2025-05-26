@@ -3,6 +3,10 @@ package modelo;
 import java.sql.*;
 import java.util.ArrayList;
 
+/*
+   Redondo Alonso David
+ */
+
 public class ConcesionarioDAO {
 
     public static ArrayList<String> getModelos() throws SQLException {
@@ -52,14 +56,14 @@ public class ConcesionarioDAO {
         return ruedas;
     }
 
-    public static boolean getPiloto() throws SQLException {
+    public static ArrayList<Boolean> getPiloto() throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("select pilotoAutomatico from opcionespilotoautomatico");
-        boolean piloto = rs.getBoolean(1);
-        return piloto;
-
-
-
+        ResultSet rs = st.executeQuery("SELECT pilotoAutomatico FROM opcionespilotoautomatico");
+        ArrayList<Boolean> pilotos = new ArrayList<>();
+        while (rs.next()) {
+            pilotos.add(rs.getBoolean(1));
+        }
+        return pilotos;
     }
 }

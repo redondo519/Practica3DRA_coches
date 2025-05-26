@@ -6,6 +6,10 @@ import vista.Vista;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/*
+   Redondo Alonso David
+ */
+
 public class Controlador {
     private Vista vista;
 
@@ -58,10 +62,13 @@ public class Controlador {
         vista.setComboRuedas(ruedas);
     }
 
+
     private void cargarPilotoAutomatico() throws SQLException {
-        boolean piloto = ConcesionarioDAO.getPiloto();
-        vista.setComboPiloto(piloto);
+        ArrayList<Boolean> pilotos = ConcesionarioDAO.getPiloto();
+        vista.setComboPiloto(pilotos);
     }
+
+
 
 
 }
