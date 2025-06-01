@@ -13,7 +13,7 @@ public class ConexionBD {
     private static Connection conexion;
     private static final String URL = "jdbc:mysql://localhost:3306/finalcoches";
     private static final String USUARIO = "root";
-    private static final String PASSWORD = ""; //Modificar
+    private static final String PASSWORD = "root"; //Modificar
 
     public static Connection getConexion() throws SQLException {
         if (conexion == null || conexion.isClosed()) {

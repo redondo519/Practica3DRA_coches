@@ -66,4 +66,17 @@ public class ConcesionarioDAO {
         }
         return pilotos;
     }
+
+    public static void guardarPedido(Pedido pedido) throws SQLException {
+        Connection con = ConexionBD.getConexion();
+        Statement st = con.createStatement();
+        PreparedStatement ps = con.prepareStatement("INSERT INTO pedidos (modelo,motor,color,ruedas,pilotoAutomatico) VALUES (?,?,?,?,?)");
+        ps.setString(1, pedido.getModelo());
+        ps.setString(2, pedido.getMotor());
+        ps.setString(3, pedido.getColor());
+        ps.setInt(4, pedido.getRuedas());
+        ps.setInt(5,pedido.getPilotoAutomatico());
+        ps.executeUpdate();
+        ps.close();
+    }
 }

@@ -52,10 +52,22 @@ public class Controlador {
                 String motor = vista.getComboMotor().getSelectedItem().toString();
                 String color = vista.getComboColor().getSelectedItem().toString();
                 int ruedas = (int) vista.getComboRuedas().getSelectedItem();
-                boolean pilotoAutomatico = (boolean) vista.getComboPiloto().getSelectedItem();
+                int pilotoAutomatico;
+                if((boolean)vista.getComboPiloto().getSelectedItem()){
+                    pilotoAutomatico = 1;
+                }else{
+                    pilotoAutomatico = 0;
+                }
 
                 //Costruimos objeto de Pedido con los datos seleccionados en los comboboxes
-                Pedido pedido = new Pedido(modelo, motor, color, ruedas, pilotoAutomatico);
+                //guardamos objeto en base de datos con el formato correcto
+                try {
+                    ConcesionarioDAO.guardarPedido(new Pedido(modelo, motor, color, ruedas, pilotoAutomatico));
+                } catch (SQLException ex) {
+                    vista.muestraAlerta("Error al guardar pedido");
+                }
+
+
             }
         });
 
