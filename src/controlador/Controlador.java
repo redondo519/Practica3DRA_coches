@@ -4,10 +4,12 @@ import modelo.ConcesionarioDAO;
 import modelo.Pedido;
 import vista.Vista;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
    Redondo Alonso David
@@ -45,31 +47,52 @@ public class Controlador {
 
         //HACER PEDIDO
         vista.getBotonPedido().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Costruimos objeto de Pedido con los datos seleccionados en los comboboxes
                 String modelo = vista.getComboModelo().getSelectedItem().toString();
                 String motor = vista.getComboMotor().getSelectedItem().toString();
                 String color = vista.getComboColor().getSelectedItem().toString();
                 int ruedas = (int) vista.getComboRuedas().getSelectedItem();
                 int pilotoAutomatico;
-                if((boolean)vista.getComboPiloto().getSelectedItem()){
+                if ((boolean) vista.getComboPiloto().getSelectedItem()) {
                     pilotoAutomatico = 1;
-                }else{
+                } else {
                     pilotoAutomatico = 0;
                 }
-
-                //Costruimos objeto de Pedido con los datos seleccionados en los comboboxes
-                //guardamos objeto en base de datos con el formato correcto
-                try {
-                    ConcesionarioDAO.guardarPedido(new Pedido(modelo, motor, color, ruedas, pilotoAutomatico));
-                } catch (SQLException ex) {
-                    vista.muestraAlerta("Error al guardar pedido");
+                //Preguntar si desea realizar el pedido
+                int respuesta = vista.muestraMensaje("¿Desea hacer un pedido con los datos seleccionados?");
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    //El usuario aceptó | guardamos objeto en base de datos con el formato correcto
+                    try {
+                        ConcesionarioDAO.guardarPedido(new Pedido(modelo, motor, color, ruedas, pilotoAutomatico));
+                    } catch (SQLException ex) {
+                        vista.muestraAlerta("Error al guardar pedido");
+                    }
                 }
-
+            }
+        });
+        //VISUALIZAR PEDIDOS
+        vista.getBotonVisualizar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Lammar a ConcesionarioDAO | traer datos
+                try {
+                    List<String> pedidos = ConcesionarioDAO.verPedidos();
+                    vista.rellenarJlist(pedidos);
+                    vista.getBotonSeleccionado().setEnabled(!pedidos.isEmpty());
+                } catch (SQLException ex) {
+                    vista.muestraAlerta("Error al visualizar los pedidos");
+                }
 
             }
         });
+        //BAJA PEDIDO
+
+
+
+
+
 
     }
 

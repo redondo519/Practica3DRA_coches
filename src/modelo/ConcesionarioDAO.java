@@ -2,6 +2,7 @@ package modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
    Redondo Alonso David
@@ -78,5 +79,23 @@ public class ConcesionarioDAO {
         ps.setInt(5,pedido.getPilotoAutomatico());
         ps.executeUpdate();
         ps.close();
+    }
+
+    public static List<String> verPedidos() throws SQLException {
+        List<String> pedidos = new ArrayList<>();
+        Connection con = ConexionBD.getConexion();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM pedidos");
+        while (rs.next()) {
+            String p = rs.getString(1) + "," + rs.getString(2) +
+                    "," + rs.getString(3) + "," + rs.getString(4) + "," +
+                    rs.getString(5) + "," + rs.getString(6
+            );
+            pedidos.add(p);
+        }
+        if(pedidos.isEmpty()){
+            pedidos.add("No hay pedidos a visualizar");
+        }
+        return pedidos;
     }
 }

@@ -2,6 +2,7 @@ package vista;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
    Redondo Alonso David
@@ -99,6 +100,16 @@ public class Vista extends JFrame {
         return botonPedido;
     }
 
+    //metodo boton Visualizar pedidos
+    public JButton getBotonVisualizar(){
+        return botonVisualizar;
+    }
+    //metodo voton baja pedido
+    public JButton getBotonSeleccionado(){
+        return botonSeleccionado;
+    }
+
+
 
 
     //Metodo para mostrar alertas de excepciones
@@ -109,6 +120,26 @@ public class Vista extends JFrame {
                 "Alerta",
                 JOptionPane.WARNING_MESSAGE
         );
+    }
+
+    public int muestraMensaje(String mensaje) {
+        return JOptionPane.showConfirmDialog(
+                Panel1,
+                mensaje,
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+    }
+
+    //Metodo para rellenar JList
+    public void rellenarJlist(List<String> pedidos) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (String s : pedidos) {
+            model.addElement(s);
+        }
+        jList.setModel(model);
     }
 }
 
