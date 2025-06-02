@@ -100,9 +100,7 @@ public class ConcesionarioDAO {
             );
             pedidos.add(p);
         }
-        if (pedidos.isEmpty()) {
-            pedidos.add("No hay pedidos a visualizar");
-        }
+
         return pedidos;
     }
 

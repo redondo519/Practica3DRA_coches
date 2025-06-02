@@ -120,7 +120,11 @@ public class Controlador {
 
                     //Llamamos a ConcesionarioDAO y eliminamos el pedido con id = idSeleccionado
                     try {
-                        ConcesionarioDAO.borrarPedido(idSelect);
+                        ConcesionarioDAO.borrarPedido(idSelect); //borrar pedido
+                        // Actualizar Jlist tras borrar pedido
+                        List<String> pedidos = ConcesionarioDAO.verPedidos();
+                        vista.rellenarJlist(pedidos);
+                        vista.setBotonBajaEnabled(!pedidos.isEmpty());
                     } catch (SQLException ex) {
                         vista.muestraAlerta("Error al borrar pedido");
                     }

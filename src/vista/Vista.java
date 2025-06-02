@@ -27,6 +27,10 @@ public class Vista extends JFrame {
     private JList jList;
 
 
+
+
+
+
     public Vista() {
         JFrame frame = new JFrame("Concesionario");
         frame.setContentPane(Panel1);
@@ -116,7 +120,13 @@ public class Vista extends JFrame {
             model.addElement(s);
         }
         jList.setModel(model);
+        if(pedidos.isEmpty()){
+            muestraAlerta("No hay pedidos a visualizar");
+        }
     }
+
+
+
 
     // Metodo oara obtener el indice seleccionado del Jlist
     public int getIndicePedidoSeleccionado() {
