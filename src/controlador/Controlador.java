@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -22,8 +23,9 @@ public class Controlador {
     //Constructor (se le pasa la vista)
     public Controlador(Vista vista) {
         this.vista = vista;
-        inicializarComboBoxes(); //metodo que carga los datos en todos los comboboxes.
-        configurarEventos();    //metodo que prepara todos los eventos de la GUI: botones y list
+        inicializarComboBoxes();    //metodo que carga los datos en todos los comboboxes.
+        configurarEventos();        //metodo que prepara todos los eventos de la GUI: botones y list
+
     }
 
 
@@ -36,6 +38,7 @@ public class Controlador {
             cargarRuedas();
             cargarPilotoAutomatico();
 
+
         } catch (SQLException e){
             vista.muestraAlerta("Error al cargar los datos iniciales"); //Muestra la alerta mediante JOptionPane.showMessageDialog
         }
@@ -44,6 +47,9 @@ public class Controlador {
 
     //Preparar botones y jlist.
     private void configurarEventos() {
+
+        //Deshabilitar boton Dar de Baja
+        vista.setBotonBajaEnabled(false);
 
         //HACER PEDIDO
         vista.getBotonPedido().addActionListener(new ActionListener() {
@@ -80,7 +86,8 @@ public class Controlador {
                 try {
                     List<String> pedidos = ConcesionarioDAO.verPedidos();
                     vista.rellenarJlist(pedidos);
-                    vista.getBotonSeleccionado().setEnabled(!pedidos.isEmpty());
+                    //Activo boton baja pedidos | si no esta vacío
+                    vista.getBotonBaja().setEnabled(!pedidos.isEmpty());
                 } catch (SQLException ex) {
                     vista.muestraAlerta("Error al visualizar los pedidos");
                 }
@@ -88,6 +95,39 @@ public class Controlador {
             }
         });
         //BAJA PEDIDO
+        vista.getBotonBaja().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Compruebo si hay elementos en el jlist
+                int indice = vista.getIndicePedidoSeleccionado();
+                if (indice == -1){
+                    vista.muestraAlerta("No hay pedido seleccionado");
+                    return;
+                }
+
+                ////Obtengo el valor seleccionado (pedido completo)
+                String pedido = vista.getValorPedidoSeleccionado();
+
+                //Divido el pedido en partes segun camposBD
+                String[] partes = pedido.split(",");
+                //En la primera parte (id: 1) me quedo solo con los numeros.
+                String idSeleccionado = partes[0].replaceAll("\\D+", "");
+                int idSelect = Integer.parseInt(idSeleccionado);
+                //Pregunto por confirmacion para dar de baja
+                int respuesta = vista.muestraMensaje("Desea dar de baja el pedido con indice " + idSelect);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    //El usuario aceptó | borramos la seleccion de la BD
+
+                    //Llamamos a ConcesionarioDAO y eliminamos el pedido con id = idSeleccionado
+                    try {
+                        ConcesionarioDAO.borrarPedido(idSelect);
+                    } catch (SQLException ex) {
+                        vista.muestraAlerta("Error al borrar pedido");
+                    }
+
+                }
+            }
+        });
 
 
 

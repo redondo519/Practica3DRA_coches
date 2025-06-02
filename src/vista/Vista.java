@@ -23,7 +23,7 @@ public class Vista extends JFrame {
     private JLabel PilotoAutomatico;
     private JComboBox comboPiloto;
     private JButton botonPedido;
-    private JButton botonSeleccionado;
+    private JButton botonBaja;
     private JList jList;
 
 
@@ -105,12 +105,34 @@ public class Vista extends JFrame {
         return botonVisualizar;
     }
     //metodo voton baja pedido
-    public JButton getBotonSeleccionado(){
-        return botonSeleccionado;
+    public JButton getBotonBaja(){
+        return botonBaja;
+    }
+
+    //Metodo para rellenar JList
+    public void rellenarJlist(List<String> pedidos) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (String s : pedidos) {
+            model.addElement(s);
+        }
+        jList.setModel(model);
+    }
+
+    // Metodo oara obtener el indice seleccionado del Jlist
+    public int getIndicePedidoSeleccionado() {
+        return jList.getSelectedIndex();
+    }
+
+    // Metodo para obtener el valor seleccionado (el String del pedido)
+    public String getValorPedidoSeleccionado() {
+        return jList.getSelectedValue().toString();
     }
 
 
-
+    // Metodo para activar/desactivar el botón de baja
+    public void setBotonBajaEnabled(boolean enabled) {
+        botonBaja.setEnabled(enabled);
+    }
 
     //Metodo para mostrar alertas de excepciones
     public void muestraAlerta(String alerta) {
@@ -133,13 +155,6 @@ public class Vista extends JFrame {
 
     }
 
-    //Metodo para rellenar JList
-    public void rellenarJlist(List<String> pedidos) {
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for (String s : pedidos) {
-            model.addElement(s);
-        }
-        jList.setModel(model);
-    }
+
 }
 

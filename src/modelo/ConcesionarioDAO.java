@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ConcesionarioDAO {
 
+    //obtener de la BD las opciones para modelo
     public static ArrayList<String> getModelos() throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
@@ -22,6 +23,7 @@ public class ConcesionarioDAO {
     }
 
 
+    //obtener de la BD las opciones para motor
     public static ArrayList<String> getMotores() throws SQLException {
 
         Connection con = ConexionBD.getConexion();
@@ -35,6 +37,7 @@ public class ConcesionarioDAO {
 
     }
 
+    //obtener de la BD las opciones para color
     public static ArrayList<String> getColores() throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
@@ -46,6 +49,7 @@ public class ConcesionarioDAO {
         return colores;
     }
 
+    //obtener de la BD las opciones para ruedas
     public static ArrayList<Integer> getRuedas() throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
@@ -57,6 +61,7 @@ public class ConcesionarioDAO {
         return ruedas;
     }
 
+    //obtener de la BD las opciones para pilotoAutomatico
     public static ArrayList<Boolean> getPiloto() throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
@@ -68,6 +73,7 @@ public class ConcesionarioDAO {
         return pilotos;
     }
 
+    //Insertar pedido en BD
     public static void guardarPedido(Pedido pedido) throws SQLException {
         Connection con = ConexionBD.getConexion();
         Statement st = con.createStatement();
@@ -76,11 +82,12 @@ public class ConcesionarioDAO {
         ps.setString(2, pedido.getMotor());
         ps.setString(3, pedido.getColor());
         ps.setInt(4, pedido.getRuedas());
-        ps.setInt(5,pedido.getPilotoAutomatico());
+        ps.setInt(5, pedido.getPilotoAutomatico());
         ps.executeUpdate();
         ps.close();
     }
 
+    //Mostrar los pedidos de la BD
     public static List<String> verPedidos() throws SQLException {
         List<String> pedidos = new ArrayList<>();
         Connection con = ConexionBD.getConexion();
@@ -93,9 +100,19 @@ public class ConcesionarioDAO {
             );
             pedidos.add(p);
         }
-        if(pedidos.isEmpty()){
+        if (pedidos.isEmpty()) {
             pedidos.add("No hay pedidos a visualizar");
         }
         return pedidos;
+    }
+
+    //Borrar pedido de la BD
+    public static void borrarPedido(int idSelect) throws SQLException {
+        Connection con = ConexionBD.getConexion();
+        Statement st = con.createStatement();
+        PreparedStatement ps = con.prepareStatement("DELETE FROM pedidos WHERE id = ?");
+        ps.setInt(1, idSelect);
+        ps.executeUpdate();
+        ps.close();
     }
 }
